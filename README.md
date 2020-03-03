@@ -3,10 +3,10 @@
 File: AndroidManifest.xml - application
 1. tools:replace="android:appComponentFactory"
 File gradle.properties agregar
-´´´
+```
 android.useAndroidX=true
 android.enableJetifier=true
-´´´
+```
 
 # cordova-plugin-idnow
 Cordova plugin for IDnow ID verification mobile SDKs which supports Andrid and iOS platforms. This repository wraps the IDnow Android and iOS SDKs to be used in Cordova project.
