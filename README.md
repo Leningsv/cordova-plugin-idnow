@@ -2,7 +2,9 @@
 
 File: AndroidManifest.xml - application
 1. tools:replace="android:appComponentFactory"
+
 File gradle.properties agregar
+
 ```
 android.useAndroidX=true
 android.enableJetifier=true
