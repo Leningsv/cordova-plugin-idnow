@@ -1,9 +1,13 @@
+# Instalacion 
+
+ionic cordova plugin add https://github.com/Leningsv/cordova-plugin-idnow
+
 # Configuraciones adicionales 
 
 File: AndroidManifest.xml - application
-1. tools:replace="android:appComponentFactory"
+tools:replace="android:appComponentFactory"
 
-File gradle.properties agregar
+### File gradle.properties agregar
 
 ```
 android.useAndroidX=true
