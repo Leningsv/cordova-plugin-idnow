@@ -1,26 +1,25 @@
 def minSdkVersion = 21
 
-if(cdvMinSdkVersion == null) {
+if (cdvMinSdkVersion == null) {
     ext.cdvMinSdkVersion = minSdkVersion;
 } else if (cdvMinSdkVersion.toInteger() < minSdkVersion) {
     ext.cdvMinSdkVersion = minSdkVersion;
 }
 
-repositories{
-     google()
+repositories {
+    google()
     jcenter()
-      maven {
-            url "https://raw.githubusercontent.com/idnow/de.idnow.android/master"
-        }
-    flatDir{
+    maven {
+        url "https://raw.githubusercontent.com/idnow/de.idnow.android/master"
+    }
+    flatDir {
         dirs 'libs'
     }
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-android:1.7.12'
-    implementation ('de.idnow.sdk:idnow-android-sdk:4.1.2'){
-        exclude group: 'com.squareup.okhttp3', module:'okhttp'
+    implementation('de.idnow.sdk:idnow-android-sdk:4.1.2') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
@@ -44,7 +43,7 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
-     packagingOptions {
+    packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
