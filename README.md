@@ -8,11 +8,11 @@ File: AndroidManifest.xml
 
 - tag <manifest add: 
 
-xmlns:tools="http://schemas.android.com/tools"
+```xmlns:tools="http://schemas.android.com/tools"```
 
 - <manifest <application add:
 
-tools:replace="android:icon"
+```tools:replace="android:icon"```
 
 ### File gradle.properties agregar
 
