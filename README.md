@@ -2,7 +2,7 @@
 
 ionic cordova plugin add https://github.com/Leningsv/cordova-plugin-idnow
 
-# Configuraciones adicionales  luego de generar la platform en adnroid
+## Configuraciones adicionales  luego de generar la platform en android
 
 File: AndroidManifest.xml
 
