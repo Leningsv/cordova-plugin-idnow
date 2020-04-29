@@ -57,5 +57,10 @@
         </config-file>
         <framework src="IDnowSDK" type="podspec" spec="4.1.3" />
         <source-file src="src/ios/IDnowPlugin.m" />
+        <dependencies>
+          <iosPods>
+            <iosPod name="okhttp" version="~> 3.10.0" bitcodeEnabled="true" />
+          </iosPods>
+        </dependencies>
     </platform>
 </plugin>
