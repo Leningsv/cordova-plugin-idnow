@@ -18,8 +18,8 @@ static NSString *TRANSACTION_TOKEN_PHOTO_IDENT = nil;
 // Your company id provided by IDnow
 static NSString *COMPANY_ID_PHOTO_IDENT = nil;
 
-BOOL SHOW_ERROR_SUCCESS_SCREEN = true;
-BOOL SHOW_VIDEO_OVERVIEW_CHECK = true;
+BOOL SHOW_ERROR_SUCCESS_SCREEN = false;
+BOOL SHOW_VIDEO_OVERVIEW_CHECK = false;
 
 NSTimer *keepAliveTimer;
 
@@ -40,20 +40,15 @@ NSTimer *keepAliveTimer;
 
 
 - (void) startVideoIdent:(CDVInvokedUrlCommand*)command {
-//    globalCommand = command;
     
 //    [self validateTimer];
     // Set up and customize settings
     self.settings = [IDnowSettings new];
-    self.settings.showErrorSuccessScreen = true;
-    self.settings.showVideoOverviewCheck = true;
-    
-    
     COMPANY_ID_VIDEO_IDENT = [command.arguments objectAtIndex:0];
-    TRANSACTION_TOKEN_VIDEO_IDENT = [command.arguments objectAtIndex:0];
+    TRANSACTION_TOKEN_VIDEO_IDENT = [command.arguments objectAtIndex:1];
     API_HOST = [command.arguments objectAtIndex:2];
-//    SHOW_VIDEO_OVERVIEW_CHECK = [globalCommand.arguments objectAtIndex:3];
-//    SHOW_ERROR_SUCCESS_SCREEN = [globalCommand.arguments objectAtIndex:4];
+    SHOW_VIDEO_OVERVIEW_CHECK =false;
+    SHOW_ERROR_SUCCESS_SCREEN = false;
     
     
     
@@ -128,8 +123,8 @@ NSTimer *keepAliveTimer;
     self.settings.transactionToken = TRANSACTION_TOKEN_PHOTO_IDENT;
     self.settings.companyID = COMPANY_ID_PHOTO_IDENT;
     self.settings.apiHost = API_HOST;
-    self.settings.showVideoOverviewCheck = SHOW_VIDEO_OVERVIEW_CHECK;
-    self.settings.showErrorSuccessScreen = SHOW_ERROR_SUCCESS_SCREEN;
+    self.settings.showVideoOverviewCheck = false;
+    self.settings.showErrorSuccessScreen = false;
     
     // This time we use the delegate instead of blocks (it's your choice)
     self.idnowController.delegate = self;
