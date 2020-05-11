@@ -18,8 +18,8 @@ static NSString *TRANSACTION_TOKEN_PHOTO_IDENT = nil;
 // Your company id provided by IDnow
 static NSString *COMPANY_ID_PHOTO_IDENT = nil;
 
-BOOL SHOW_ERROR_SUCCESS_SCREEN = false;
-BOOL SHOW_VIDEO_OVERVIEW_CHECK = false;
+BOOL SHOW_ERROR_SUCCESS_SCREEN = true;
+BOOL SHOW_VIDEO_OVERVIEW_CHECK = true;
 
 NSTimer *keepAliveTimer;
 
@@ -28,7 +28,7 @@ NSTimer *keepAliveTimer;
 }
 
 @property (strong, nonatomic) IDnowController *idnowController;
-@property (strong, nonatomic) IDnowSettings	  *settings;
+@property (strong, nonatomic) IDnowSettings      *settings;
 
 //- (void)initIDNow:(CDVInvokedUrlCommand*)command;
 - (void)startVideoIdent:(CDVInvokedUrlCommand*)command;
@@ -41,14 +41,17 @@ NSTimer *keepAliveTimer;
 
 - (void) startVideoIdent:(CDVInvokedUrlCommand*)command {
     
-//    [self validateTimer];
     // Set up and customize settings
     self.settings = [IDnowSettings new];
+    self.settings.showErrorSuccessScreen = true;
+    self.settings.showVideoOverviewCheck = true;
+    
+    
     COMPANY_ID_VIDEO_IDENT = [command.arguments objectAtIndex:0];
     TRANSACTION_TOKEN_VIDEO_IDENT = [command.arguments objectAtIndex:1];
     API_HOST = [command.arguments objectAtIndex:2];
-    SHOW_VIDEO_OVERVIEW_CHECK =false;
-    SHOW_ERROR_SUCCESS_SCREEN = false;
+    SHOW_VIDEO_OVERVIEW_CHECK = [[command.arguments objectAtIndex:3] boolValue];
+    SHOW_ERROR_SUCCESS_SCREEN = [[command.arguments objectAtIndex:4] boolValue];
     
     
     
@@ -77,15 +80,17 @@ NSTimer *keepAliveTimer;
                   {
                       // If showErrorSuccessScreen (Settings) is disabled
                       // you can show for example an alert to your users.
+                      CDVPluginResult* pluginResult = nil;
+                      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Identification performed"];
+                       [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                   }
                   else
                   {
                       // If showErrorSuccessScreen (Settings) is disabled and error.type == IDnowErrorTypeIdentificationFailed
                       // you can show for example an alert to your users.
-//                      [self invalidateTimer];
-//                      CDVPluginResult* pluginResult = nil;
-//                      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Video Identification Aborted"];
-//                      [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
+                      CDVPluginResult* pluginResult = nil;
+                      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Video Identification Aborted"];
+                      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                   }
               }];
          }
@@ -103,9 +108,7 @@ NSTimer *keepAliveTimer;
 
 
 - (void)startPhotoIdent:(CDVInvokedUrlCommand*)command {
-    
-//    globalCommand = command;
-    
+        
     
     // Set up and customize settings
     self.settings = [IDnowSettings new];
@@ -113,18 +116,18 @@ NSTimer *keepAliveTimer;
     self.settings.showVideoOverviewCheck = true;
     
     
-//    COMPANY_ID_VIDEO_IDENT = [globalCommand.arguments objectAtIndex:0];
-//    TRANSACTION_TOKEN_VIDEO_IDENT = [globalCommand.arguments objectAtIndex:1];
-//    API_HOST = [globalCommand.arguments objectAtIndex:2];
-//    SHOW_VIDEO_OVERVIEW_CHECK = [globalCommand.arguments objectAtIndex:3];
-//    SHOW_ERROR_SUCCESS_SCREEN = [globalCommand.arguments objectAtIndex:4];
+    COMPANY_ID_VIDEO_IDENT = [command.arguments objectAtIndex:0];
+    TRANSACTION_TOKEN_VIDEO_IDENT = [command.arguments objectAtIndex:1];
+    API_HOST = [command.arguments objectAtIndex:2];
+    SHOW_VIDEO_OVERVIEW_CHECK = [command.arguments objectAtIndex:3];
+    SHOW_ERROR_SUCCESS_SCREEN = [command.arguments objectAtIndex:4];
     
     // Setting dummy dev token and company id -> will instantiate a photo identification
     self.settings.transactionToken = TRANSACTION_TOKEN_PHOTO_IDENT;
     self.settings.companyID = COMPANY_ID_PHOTO_IDENT;
     self.settings.apiHost = API_HOST;
-    self.settings.showVideoOverviewCheck = false;
-    self.settings.showErrorSuccessScreen = false;
+    self.settings.showVideoOverviewCheck = SHOW_VIDEO_OVERVIEW_CHECK;
+    self.settings.showErrorSuccessScreen = SHOW_ERROR_SUCCESS_SCREEN;
     
     // This time we use the delegate instead of blocks (it's your choice)
     self.idnowController.delegate = self;
@@ -139,7 +142,7 @@ NSTimer *keepAliveTimer;
 {
     // Initialization failed -> Present an alert containing localized error description
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error" message: error.localizedDescription preferredStyle: UIAlertControllerStyleAlert];
-    UIAlertAction	  *action		   = [UIAlertAction actionWithTitle: @"Ok" style: UIAlertActionStyleCancel handler: nil];
+    UIAlertAction      *action           = [UIAlertAction actionWithTitle: @"Ok" style: UIAlertActionStyleCancel handler: nil];
     [alertController addAction: action];
     [self.viewController presentViewController: alertController animated: true completion: nil];
 }
@@ -157,10 +160,8 @@ NSTimer *keepAliveTimer;
     // The identification was canceled by the user.
     // For example the user tapped on the "x"-Button or simply navigates back.
     // Normally you don't have to do anything...
-//    [self invalidateTimer];
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Identification Canceled By User"];
-//    [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
 }
 
 
@@ -169,10 +170,8 @@ NSTimer *keepAliveTimer;
     // Identification failed
     // If showErrorSuccessScreen (Settings) is disabled and error.type == IDnowErrorTypeIdentificationFailed
     // you can show for example an alert to your users.
-//    [self invalidateTimer];
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
-//    [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
 }
 
 
@@ -181,10 +180,8 @@ NSTimer *keepAliveTimer;
     // Identification was successfull
     // If showErrorSuccessScreen (Settings) is disabled
     // you can show for example an alert to your users.
-//    [self invalidateTimer];
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Identification Finished"];
-//    [self.commandDelegate sendPluginResult:pluginResult callbackId:globalCommand.callbackId];
 }
 
 @end
