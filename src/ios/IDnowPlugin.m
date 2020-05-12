@@ -64,6 +64,8 @@ NSTimer *keepAliveTimer;
     self.settings.apiHost = API_HOST;
     self.settings.showVideoOverviewCheck = SHOW_VIDEO_OVERVIEW_CHECK;
     self.settings.showErrorSuccessScreen = SHOW_ERROR_SUCCESS_SCREEN;
+    self.settings.forceModalPresentation = true;
+    self.settings.modalPresentationStyle = UIModalPresentationFullScreen;
     
     self.idnowController.delegate  = nil;
     __weak IDnowPlugin *weakSelf   = self;
