@@ -113,8 +113,8 @@ public class IDnowPlugin extends CordovaPlugin {
                 if(resultCode !=  null){
                     toastText = resultCode;
                 }               
-                Toast.makeText( context, toastText.toString(), Toast.LENGTH_LONG ).show();
-                callbackContext.success(toastText.toString());
+                Toast.makeText( context, toastText, Toast.LENGTH_LONG ).show();
+                callbackContext.success(toastText);
             }
         }
     }
