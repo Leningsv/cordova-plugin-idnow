@@ -110,7 +110,7 @@ public class IDnowPlugin extends CordovaPlugin {
             else
             {
                 String toastText = "INTERNAL_ERROR";             
-                Toast.makeText( context, toastText, Toast.LENGTH_LONG ).show();
+                Toast.makeText(context, toastText, Toast.LENGTH_LONG ).show();
                 callbackContext.success(toastText);
             }
         }
