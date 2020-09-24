@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation('de.idnow.sdk:idnow-android-sdk:4.1.4') {
+    implementation('de.idnow.sdk:idnow-android-sdk:4.3.1') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
