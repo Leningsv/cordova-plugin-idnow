@@ -55,7 +55,7 @@
         <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
             <string>This app needs photo library access</string>
         </config-file>
-        <framework src="IDnowSDK" type="podspec" spec="4.3.4" />
+        <framework src="IDnowSDK" type="podspec" spec="4.3.1" />
         <source-file src="src/ios/IDnowPlugin.m" />
     </platform>
 </plugin>
